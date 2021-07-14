@@ -1,0 +1,13 @@
+{
+  "user": {
+    "id": "gZSTx8071",
+    "uuid": "46e8b984-0761-4bef-a0aa-0db3e1a33f7f",
+    "firstName": "Luke",
+    "lastName": "Shaw",
+    "username": "luke.shaw",
+    "password": "$2a$10$GIgq7mIsJvu6afAwAQPqM.TBZx6dMGXKAjVjLxGM/l4nEiusKlQva",
+    "balance": 0,
+    "createdAt": "2021-07-14T08:28:37.218Z",
+    "modifiedAt": "2021-07-14T08:28:37.218Z"
+  }
+}
