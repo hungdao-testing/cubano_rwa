@@ -9,9 +9,8 @@ To create an account, client must satisfy the conditions:
 - First/Last Name, Username, Password and Confirm Password must be provided.
 - Password and Confirm Password must be the same as, and at least contain 4 chars.
 
-### [Scenario: ](- "Sign up successfully") Client could register an account with valid information.
-
-
+### Scenario: Client could register an account with valid information.
+#### [Example:](- "Could sign up")
 <div>
     <p concordion:execute="#data=registerAccount(#firstName,#lastName,#username,#password,#confirmPassword)">
 
@@ -31,6 +30,7 @@ Then his account should be created [successfully](- "c:assert-true=#data.signUpR
 <br/>
 
 ### Scenario: Client could not register an account with invalid information.
+#### [Example:](- "Could not sign up")
 |[][registerAccount][Case](- "c:example")|[First Name][]|[Last Name][]|[Username][]|[Password][]|[Confirm Password][]|[Error Message][match]|
 |---|---|---|---|---|---|---|
 |Missing first Name|<p/>|Becka|john.becka|s3cret|s3cret|First Name is required|

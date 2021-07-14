@@ -5,10 +5,10 @@ Response Headers:
   Connection: keep-alive
   Content-Length: 298
   Content-Type: application/json; charset=utf-8
-  Date: Wed, 14 Jul 2021 10:26:38 GMT
+  Date: Wed, 14 Jul 2021 15:57:02 GMT
   ETag: W/"12a-2Y9AbejOmQl3iCXZL2wjAOnarZ0"
   Keep-Alive: timeout=5
-  Set-Cookie: connect.sid=s%3AUL6Vzyicmxecy-s_TIMNAOKtROLmzbtX.N4J3BImd7vY1jE%2FIp3u8cta6K9xT1AybSie5UeftRD8; Path=/; HttpOnly
+  Set-Cookie: connect.sid=s%3AMiJF0bwdLCqMW4O0YVy5GLTPiPNe7B0R.riRr7yY5YmYk%2F%2FT1Zm8UyanMeX%2BEGO1CuHjVtBIMrWA; Path=/; HttpOnly
   Vary: Origin
   X-Powered-By: Express
 Response:

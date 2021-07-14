@@ -21,10 +21,9 @@ public class BankAccountService extends BaseService{
                     .withLogWriter(testLoggerLogWriter)
                     .logRequestDetails()
                     .post();
-
-            addNotification("Login Request", testLoggerLogWriter.getRequest());
-            addNotification("Raw Login Response", response.getJsonReader().asPrettyString());
-            addNotification("Login Response", testLoggerLogWriter.getResponse());
+            addNotification("TestLoggerLogWriter Request", testLoggerLogWriter.getRequest());
+            addNotification("Raw JSON Response", response.getJsonReader().asPrettyString());
+            addNotification("TestLoggerLogWriter Response", testLoggerLogWriter.getResponse());
             return response;
 
         }catch (IOException e) {

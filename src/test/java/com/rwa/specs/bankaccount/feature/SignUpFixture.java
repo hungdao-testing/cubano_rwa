@@ -1,6 +1,5 @@
 package com.rwa.specs.bankaccount.feature;
 
-import com.google.common.util.concurrent.Uninterruptibles;
 import com.rwa.pages.SignUpPage;
 import com.rwa.services.BankAccountService;
 import org.concordion.api.AfterExample;
@@ -9,6 +8,8 @@ import org.concordion.api.FullOGNL;
 import org.concordion.api.MultiValueResult;
 import org.concordion.cubano.driver.http.HttpEasyReader;
 import org.concordion.cubano.template.framework.CubanoTemplateFixture;
+import org.concordion.ext.storyboard.CardResult;
+import org.concordion.ext.storyboard.StockCardImage;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import java.io.IOException;
@@ -47,7 +48,7 @@ public class SignUpFixture extends CubanoTemplateFixture {
 
         this.signUpPage.submit();
         return multiValueResult
-                .with("signUpResult", isAccountCreationServiceProcessSuccessfully(username, password))
+                .with("signUpResult", isAccountCreationProcessSuccessfully(username, password))
                 .with("errorMessage", "");
     }
 
@@ -55,7 +56,7 @@ public class SignUpFixture extends CubanoTemplateFixture {
         return !this.signUpPage.getErrorMessageEls().stream().anyMatch(WebElement::isDisplayed);
     }
 
-    public boolean isAccountCreationServiceProcessSuccessfully(String username, String password) throws IOException {
+    private boolean isAccountCreationProcessSuccessfully(String username, String password) throws IOException {
         HttpEasyReader resp = this.bankAccountService.loginByApi(username, password);
         int code = resp.getResponseCode();
         String returnedUsername = resp.getJsonReader().jsonPath("user.username").getAsString();

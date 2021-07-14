@@ -14,9 +14,13 @@ import org.concordion.cubano.framework.resource.CloseListener;
 import org.concordion.cubano.framework.resource.ResourceScope;
 import org.concordion.cubano.template.AppConfig;
 import org.concordion.cubano.template.driver.httpeasy.HttpEasyConfigurator;
+import org.concordion.ext.StoryboardMarkerFactory;
 import org.concordion.ext.TimestampFormatterExtension;
 import org.concordion.ext.runtotals.RunTotalsExtension;
 import org.concordion.ext.statusinfo.StatusInfoExtension;
+import org.concordion.ext.storyboard.CardResult;
+import org.concordion.ext.storyboard.StockCardImage;
+import org.concordion.slf4j.ext.MediaType;
 import org.concordion.slf4j.ext.ReportLogger;
 import org.concordion.slf4j.ext.ReportLoggerFactory;
 
