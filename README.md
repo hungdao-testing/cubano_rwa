@@ -1,19 +1,16 @@
-[![Build and Test](https://github.com/concordion/cubano-template/actions/workflows/ci.yml/badge.svg)](https://github.com/concordion/cubano-template/actions/workflows/ci.yml)
+[In- Progress]
 
-# Cubano Template Project
+# Goals
 
-This is a quick start Cubano template for projects wanting to use the [Cubano framework](https://github.com/concordion/cubano).
+> By blending specification and checking of your software into executable specifications, the Concordion creates beautiful living documentation
 
-Further information regarding 
-* usage
-* documentation
-* working examples 
-* set up instructions 
+> Reference: https://concordion.org/
 
-can be found on the [Cubano Demo Project](https://github.com/concordion/cubano-demo#cubano-demo-project).
+## Framework:
+> Cubano: https://concordion.org/cubano/
 
-To pull down the project:
-`git clone https://github.com/concordion/cubano-template.git` or download and unzip this project
+> Application to test: Cypress Realworld app
+https://github.com/cypress-io/cypress-realworld-app
 
-This project includes specifications for 2 features that are implemented as a web interface and an API respectively.
-
+## Sample living documentation
+https://rawcdn.githack.com/hungdao-testing/cubano_rwa/main/target/concordion/com/rwa/specs/bankaccount/feature/SignUp.html
