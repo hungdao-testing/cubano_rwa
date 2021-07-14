@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Implementation-Title: cubano-webdriver
+Built-With: gradle-4.4.1, groovy-2.4.12
+Implementation-Version: 0.3.4
+Specification-Vendor: concordion.org
+Build-Revision: 1c7b8e8d6d58490230b56f2235d3b8c2b658ac0d
+Specification-Title: cubano-webdriver
+Build-Time: 2019-06-18T09:54Z
+Build-OS: Mac OS X x86_64 10.14.5
+Specification-Version: 0.3
+Created-By: 1.8.0_152 (Oracle Corporation)
+Implementation-Vendor: concordion.org
+
