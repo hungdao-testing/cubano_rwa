@@ -1,6 +1,6 @@
 package com.rwa.pages;
 
-import com.rwa.specs.BaseFixture;
+import com.rwa.specs.BasePageObject;
 import org.concordion.cubano.driver.BrowserBasedTest;
 import org.concordion.cubano.template.AppConfig;
 import org.openqa.selenium.WebElement;
@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class SignUpPage extends BaseFixture {
+public class SignUpPage extends BasePageObject {
     @FindBy(id = "firstName")
     private WebElement firstNameField;
 
@@ -45,19 +45,19 @@ public class SignUpPage extends BaseFixture {
     }
 
     public SignUpPage inputName(String firstName, String lastName){
-        firstNameField.sendKeys(setOutputForEmptyInput(firstName));
-        lastNameField.sendKeys(setOutputForEmptyInput(lastName));
+        firstNameField.sendKeys(setOutputIfInputValueIsEmpty(firstName));
+        lastNameField.sendKeys(setOutputIfInputValueIsEmpty(lastName));
         return this;
     }
 
     public SignUpPage inputPwd(String password, String confirmPassword){
-        passwordField.sendKeys(setOutputForEmptyInput(password));
-        confirmPasswordField.sendKeys(setOutputForEmptyInput(confirmPassword));
+        passwordField.sendKeys(setOutputIfInputValueIsEmpty(password));
+        confirmPasswordField.sendKeys(setOutputIfInputValueIsEmpty(confirmPassword));
         return this;
     }
 
     public SignUpPage inputUsername(String username){
-        usernameField.sendKeys(setOutputForEmptyInput(username));
+        usernameField.sendKeys(setOutputIfInputValueIsEmpty(username));
         return this;
     }
 
