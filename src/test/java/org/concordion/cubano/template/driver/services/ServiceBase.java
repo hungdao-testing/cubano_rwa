@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import com.rwa.services.BankAccountService;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
@@ -14,7 +15,11 @@ import jakarta.xml.soap.MessageFactory;
 import jakarta.xml.soap.SOAPException;
 import jakarta.xml.soap.SOAPMessage;
 
+import org.concordion.api.FullOGNL;
+import org.concordion.cubano.driver.http.HttpEasy;
 import org.concordion.cubano.driver.http.XmlReader;
+import org.concordion.cubano.template.AppConfig;
+import org.concordion.cubano.template.driver.logger.TestLoggerLogWriter;
 import org.concordion.ext.StoryboardMarkerFactory;
 import org.concordion.ext.storyboard.CardImage;
 import org.concordion.ext.storyboard.CardResult;
@@ -24,13 +29,9 @@ import org.concordion.slf4j.ext.ReportLogger;
 import org.concordion.slf4j.ext.ReportLoggerFactory;
 import org.w3c.dom.Document;
 
+@FullOGNL
 public class ServiceBase {
     private final ReportLogger logger = ReportLoggerFactory.getReportLogger(this.getClass());
-
-    protected ReportLogger getLogger() {
-        return logger;
-    }
-
     /**
      * Log service request details.
      */

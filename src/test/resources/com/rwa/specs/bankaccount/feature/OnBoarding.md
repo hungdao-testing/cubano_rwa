@@ -17,7 +17,7 @@ I could link a bank profile to my user account.
 <div>
 <p concordion:execute="createUserAccountByApi(#name, #username, #password)">
 
-Given [Nicolas Cage](- "#name=#TEXT"), a newly created user
+Given [Nicolas Cage](- "#name"), a newly created user
 
 |Username|Password|
 |---|---|

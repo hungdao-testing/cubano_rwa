@@ -5,6 +5,7 @@ import org.concordion.api.FullOGNL;
 import org.concordion.cubano.driver.http.HttpEasy;
 import org.concordion.cubano.template.AppConfig;
 import org.concordion.cubano.template.driver.logger.TestLoggerLogWriter;
+import org.concordion.cubano.template.driver.services.ServiceBase;
 import org.concordion.cubano.template.framework.CubanoTemplateFixture;
 import org.concordion.ext.StoryboardMarkerFactory;
 import org.concordion.ext.storyboard.CardResult;
@@ -14,7 +15,7 @@ import org.concordion.slf4j.ext.ReportLogger;
 import org.concordion.slf4j.ext.ReportLoggerFactory;
 
 @FullOGNL
-public class BaseService extends CubanoTemplateFixture {
+public class BaseService {
     protected ReportLogger log = ReportLoggerFactory.getReportLogger(BankAccountService.class);
     protected HttpEasy easy = HttpEasy.request().baseUrl(AppConfig.getInstance().getApiUrl());
     protected TestLoggerLogWriter testLoggerLogWriter = new TestLoggerLogWriter();
