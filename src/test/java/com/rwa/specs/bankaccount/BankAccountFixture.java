@@ -1,4 +1,6 @@
 package com.rwa.specs.bankaccount;
 
-public class BankAccountFixture {
+import org.concordion.cubano.template.framework.CubanoTemplateIndex;
+
+public class BankAccountFixture extends CubanoTemplateIndex {
 }

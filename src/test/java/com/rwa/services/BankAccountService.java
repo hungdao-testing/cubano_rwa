@@ -1,7 +1,5 @@
 package com.rwa.services;
 
-
-import com.google.gson.Gson;
 import org.concordion.cubano.driver.http.HttpEasyReader;
 import org.concordion.cubano.driver.http.JsonReader;
 import com.google.common.net.MediaType;
@@ -29,6 +27,10 @@ public class BankAccountService extends BaseService{
         }catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    public HttpEasyReader createUserAccount(String username, String password){
         return null;
     }
 

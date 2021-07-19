@@ -5,6 +5,7 @@ import org.concordion.cubano.driver.action.ActionTimer;
 import org.concordion.cubano.driver.web.BasePageObject;
 import org.concordion.cubano.driver.web.PageReadyConditions;
 import org.concordion.cubano.template.AppConfig;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
@@ -65,6 +66,15 @@ public abstract class PageObject<T extends PageObject<T>> extends BasePageObject
     protected void waitUntilAjaxRequestsCompleted() {
         waitUntil(PageReadyConditions.noActiveAjaxRequest(), 90);
         waitUntil(PageReadyConditions.noVisibleSpinners(), 30);
+    }
+
+    protected String setOutputIfInputValueIsEmpty(String input){
+        return input == null ? "" : input;
+    }
+
+    protected void inputField(WebElement webElement, String value){
+        this.waitForElementToClickable(webElement, AppConfig.getInstance().getDefaultTimeout());
+        webElement.sendKeys(setOutputIfInputValueIsEmpty(value));
     }
 
 }
