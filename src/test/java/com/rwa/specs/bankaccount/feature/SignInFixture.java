@@ -4,85 +4,52 @@ import com.rwa.data.fixture.User;
 import com.rwa.data.management.DataManagement;
 import com.rwa.pages.HomePage;
 import com.rwa.pages.SignInPage;
+import com.rwa.services.BankAccountService;
 import org.concordion.api.*;
 import org.concordion.cubano.template.framework.CubanoTemplateFixture;
-import org.concordion.cubano.template.framework.CubanoTemplateIndex;
-import org.junit.After;
-import org.junit.Before;
-import org.openqa.selenium.JavascriptExecutor;
-import java.util.List;
 
 
 @FullOGNL
 public class SignInFixture extends CubanoTemplateFixture {
-    private SignInPage signInPage;
-    private HomePage homePage;
 
-    @Before
-    public void setUp(){
-        logger.info(" === Before : ====");
-    }
-
-    @After
-    public void tearDown () {
-        logger.info(" ==== After: Start clearing local storage ==== ");
-        JavascriptExecutor js = (JavascriptExecutor) this.getBrowser().getDriver();
-        js.executeScript("window.localStorage.clear()");
-    }
+    protected SignInPage signInPage;
+    protected HomePage homePage;
+    protected BankAccountService bankAccountService;
 
     @BeforeExample
     public void setUpExample(){
-        logger.info(" ========== Before Example: Start setUp Page Object ======== ");
         this.signInPage = new SignInPage(this);
         this.homePage = new HomePage(this);
+        this.bankAccountService = new BankAccountService();
     }
 
-    @AfterExample
-    public void tearDownExample(){
-        logger.info(" ==== After Example ==== ");
+    public User getSignInData(){
+        return DataManagement.getUsers().stream().filter(user -> user.getBalance() > 0).findFirst().get();
     }
 
-    @ConcordionScoped(Scope.SPECIFICATION)
-    private final ScopedObjectHolder<DataManagement> specScopeData = new ScopedObjectHolder<DataManagement>() {
-        @Override
-        protected DataManagement create(){
-            return new DataManagement();
-        }
-
-        @Override
-        protected void destroy(DataManagement dataManagement){
-            dataManagement.delete();
-        }
-    };
-
-    public MultiValueResult setUpSignInData(){
-        logger.info(" ==== Start setUp Sign In Data ==== ");
-        List<User> users = specScopeData.get().getUsers();
-        User waitingBankAccountUser = users
-                                        .stream()
-                                        .filter(u -> u.getBalance() == 0).findFirst().get();
-        User activatedBankAccountUser = users
-                                        .stream()
-                                        .filter(u -> u.getBalance() > 0).findFirst().get();
-        return new MultiValueResult()
-                .with("waitingBankingAccount", waitingBankAccountUser)
-                .with("activatedBankingAccount", activatedBankAccountUser);
-    }
-
-    public boolean signIn(String username, String password) {
+    public void logInWorkFlow(String username, String password){
         this.signInPage
                 .goTo(this)
+                .isAt()
                 .inputUsername(username)
                 .inputPassword(password);
-        if(!this.signInPage.isOneOfInputFieldsError()){
-            this.signInPage.submit();
-            return this.homePage.isAt();
-        }
-        return false;
+
+        if (this.signInPage.isOneOfInputFieldViolateDataRule()) return;
+        this.signInPage.submit();
     }
 
+    public boolean verifyLogInSuccessfully(){
+        return this.homePage.isAt();
+    }
 
+    public String getErrorMessage(){
+        if(this.signInPage.isOneOfInputFieldViolateDataRule()){
+            return this.signInPage.getInlineErrorMessageEls().get(0).getText();
+        }
 
-
-
+        if(this.signInPage.isAlertErrorDisplayed()){
+            return this.signInPage.getAlertErrorMessage().getText();
+        }
+        return "";
+    }
 }

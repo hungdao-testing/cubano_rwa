@@ -8,9 +8,6 @@ import org.concordion.api.FullOGNL;
 import org.concordion.api.MultiValueResult;
 import org.concordion.cubano.driver.http.HttpEasyReader;
 import org.concordion.cubano.template.framework.CubanoTemplateFixture;
-import org.concordion.ext.storyboard.CardResult;
-import org.concordion.ext.storyboard.StockCardImage;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import java.io.IOException;
 
@@ -26,17 +23,14 @@ public class SignUpFixture extends CubanoTemplateFixture {
         this.bankAccountService = new BankAccountService();
     }
 
-    @AfterExample
-    public void tearDownExample() {
-        JavascriptExecutor js = (JavascriptExecutor) this.getBrowser().getDriver();
-        js.executeScript("window.localStorage.clear()");
-    }
+
 
 
     public MultiValueResult registerAccount(String firstName, String lastName, String username, String password, String confirmPassword) throws IOException {
         MultiValueResult multiValueResult = new MultiValueResult();
         this.signUpPage
                 .open(this)
+                .isAt()
                 .inputName(firstName, lastName)
                 .inputUsername(username)
                 .inputPwd(password, confirmPassword);

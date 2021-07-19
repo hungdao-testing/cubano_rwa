@@ -6,7 +6,6 @@ import org.concordion.cubano.template.AppConfig;
 import org.concordion.cubano.template.driver.ui.PageObject;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 @FullOGNL
 public class BasePageObject extends PageObject<BasePageObject> {

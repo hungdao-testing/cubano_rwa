@@ -2,6 +2,8 @@ package org.concordion.cubano.template.framework;
 
 import java.io.Closeable;
 
+import org.concordion.api.AfterExample;
+import org.concordion.api.BeforeExample;
 import org.concordion.api.ConcordionResources;
 import org.concordion.api.FailFast;
 import org.concordion.api.extension.Extension;
@@ -23,6 +25,8 @@ import org.concordion.ext.storyboard.StockCardImage;
 import org.concordion.slf4j.ext.MediaType;
 import org.concordion.slf4j.ext.ReportLogger;
 import org.concordion.slf4j.ext.ReportLoggerFactory;
+import org.junit.After;
+import org.openqa.selenium.JavascriptExecutor;
 
 /**
  * A base class for extension by fixtures that invoke a browser, and may also use HttpEasy.
@@ -36,6 +40,8 @@ import org.concordion.slf4j.ext.ReportLoggerFactory;
 @Extensions({ TimestampFormatterExtension.class, RunTotalsExtension.class, StatusInfoExtension.class })
 @FailFast
 public abstract class CubanoTemplateFixture extends ConcordionBrowserFixture {
+    protected JavascriptExecutor js = (JavascriptExecutor) this.getBrowser().getDriver();
+
     @Extension
     private final EnvironmentExtension footer = new EnvironmentExtension()
             .withEnvironment(Config.getInstance().getEnvironment().toUpperCase())
@@ -72,5 +78,11 @@ public abstract class CubanoTemplateFixture extends ConcordionBrowserFixture {
             }
         };
         super.registerCloseableResource(resource, scope, listener);
+    }
+
+    @AfterExample
+    public void tearDownExample() {
+        JavascriptExecutor js = (JavascriptExecutor) this.getBrowser().getDriver();
+        js.executeScript("window.localStorage.clear()");
     }
 }

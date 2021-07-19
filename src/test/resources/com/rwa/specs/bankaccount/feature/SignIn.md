@@ -3,37 +3,34 @@
 As a registered user, I want to authenticate to the system by so that I could do banking activities
 
 ## Rules:
-- To authenticate to the system, clients must provide their registered usernames and passwords
-- When client logs-in to the application, system will treat them differently based on their account types:
-
-  * ACTIVATED BANK ACCOUNT: is an account of a user who already has a banking account -> the system routes them to home page
-
-  * WAITING BANK ACCOUNT: is an account of a user who has not created banking account -> the on-boarding process is triggered.
-
+- To authenticate to the system, clients must provide their registered usernames and passwords.
 - In case there are problems with sign-in, the system returns corresponding error message
   and preventing users accessing to the system.
 
 ## Scenario: User could log-in with valid credentials
 
-### [Background](- "before")
+### [Example:](- "login with valid credentials"):
+[](- "#data=getSignInData()")
+ Given [](- "c:echo=#data.firstName") [](- "c:echo=#data.lastName") registered an account with username '[](- "c:echo=#data.username")' and password '[s3cret](- "#password=#TEXT")'
 
-* Given there are registered [users](- "#data=setUpSignInData()") with password [s3cret](- "#password=#TEXT")
+ When he [logs in](- "logInWorkFlow(#data.username, #password)") with valid credentials
 
-
-### [Example](- "waiting bank account"): user account status is [waiting bank account](- "#userAccountType=#TEXT")
- Given [](- "c:echo=#data.waitingBankingAccount.firstName") [](- "c:echo=#data.waitingBankingAccount.lastName") was at Login page
-
- When he [logs-in](- "#result=signIn(#data.waitingBankingAccount.username, #password)") into the application with valid credentials
-
- Then he should authenticate to the [successfully](- "c:assert-true=#result")
+ Then he should authenticate to the app [successfully](- "c:assert-true=verifyLogInSuccessfully()")
 
 
-### [Example](- "activated bank account"): user account status is [activated Bank account](- "#userAccountType=#TEXT")
+## Scenario: User could not log-in with incorrect data
 
-Given [](- "c:echo=#data.activatedBankingAccount.firstName") [](- "c:echo=#data.activatedBankingAccount.lastName") was at Login page
+### [Example:](- "Could not login")
 
-When he [logs-in](- "#result=signIn(#data.activatedBankingAccount.username, #password)") into the application with valid credentials
+|[signIn][][Case](- "c:example")|[Username][]|[Password][]|[Error Message][match]|
+|---|---|---|---|
+|Missing input Username|<p/>|s3cret|Username is required|
+|Incorrect credential: password|may.flower|secret|Username or password is invalid|
+|Incorrect credential: username|may.flowe|s3cret|Username or password is invalid|
+|Password length|may.flower|sec|Password must contain at least 4 characters|
 
-Then he should authenticate to the application [successfully](- "c:assert-true=#result")
+[Username]: - "#username"
+[Password]: - "#password"
+[signIn]: - "logInWorkFlow(#username, #password)"
+[match]: - "?=getErrorMessage()"
 
-## [Scenario: ](- "login with invalid credentials") User could not log-in with invalid credentials

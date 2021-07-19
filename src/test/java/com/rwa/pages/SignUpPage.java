@@ -2,9 +2,11 @@ package com.rwa.pages;
 
 import com.rwa.specs.BasePageObject;
 import org.concordion.cubano.driver.BrowserBasedTest;
+import org.concordion.cubano.driver.web.ChainExpectedConditions;
 import org.concordion.cubano.template.AppConfig;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
@@ -34,13 +36,18 @@ public class SignUpPage extends BasePageObject {
         super(test);
     }
 
-
-    public static SignUpPage goTo(BrowserBasedTest browserBasedTest){
-        browserBasedTest.getBrowser().getDriver().navigate().to(AppConfig.getInstance().getWebUrl() + "/signup");
-        return new SignUpPage(browserBasedTest);
-    }
     public  SignUpPage open(BrowserBasedTest browserBasedTest){
         browserBasedTest.getBrowser().getDriver().navigate().to(AppConfig.getInstance().getWebUrl() + "/signup");
+        return this;
+    }
+
+    public SignUpPage isAt(){
+        ChainExpectedConditions
+                .with(ExpectedConditions.visibilityOf(firstNameField))
+                .and(ExpectedConditions.visibilityOf(lastNameField))
+                .and(ExpectedConditions.visibilityOf(usernameField))
+                .and(ExpectedConditions.visibilityOf(passwordField))
+                .and(ExpectedConditions.visibilityOf(confirmPasswordField));
         return this;
     }
 
