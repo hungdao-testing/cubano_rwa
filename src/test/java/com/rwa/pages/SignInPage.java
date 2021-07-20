@@ -41,10 +41,7 @@ public class SignInPage extends BasePageObject {
     }
 
     public SignInPage isAt(){
-        this.waitUntilPageIsLoaded(AppConfig.getInstance().getDefaultTimeout());
-        ChainExpectedConditions
-                .with(ExpectedConditions.visibilityOf(usernameField))
-                .and(ExpectedConditions.visibilityOf(passwordField));
+        waitUntilElementVisible(usernameField);
         return this;
     }
 

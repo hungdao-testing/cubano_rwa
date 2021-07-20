@@ -20,7 +20,7 @@ When he registers an account with <span concordion:assert-true="isRegistrationDa
 
 |First Name|Last Name| Username | Password | Confirm Password|
 |---|---|---|---|---|
-|<span concordion:echo="#firstName" />|<span concordion:echo="#lastName" />|<span concordion:set="#username">luke.shaw</span>|<span concordion:set="#password">s3cret</span>|<span concordion:set="#confirmPassword">s3cret</span>|
+|<span concordion:echo="#firstName" />|<span concordion:echo="#lastName"/>|<span concordion:set="#username">luke.shaw</span>|<span concordion:set="#password">s3cret</span>|<span concordion:set="#confirmPassword">s3cret</span>|
 
 Then his account should be created [successfully](- "c:assert-true=#data.signUpResult")
 

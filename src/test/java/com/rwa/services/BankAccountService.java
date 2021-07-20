@@ -30,7 +30,30 @@ public class BankAccountService extends BaseService{
         return null;
     }
 
-    public HttpEasyReader createUserAccount(String username, String password){
+    public HttpEasyReader createUserAccount(String fullName, String username, String password){
+        String CREATE_USERS = "/users";
+        String firstName = fullName.split(" ")[0];
+        String lastName = fullName.split(" ")[1];
+        String payload = String.format("{" +
+                "\n\"firstName\": \"%s\",\n" +
+                "\"lastName\": \"%s\",\n" +
+                "\"username\": \"%s\",\n" +
+                "\"password\": \"%s\"\n" +
+                "}", firstName, lastName, username, password);
+
+        try {
+            HttpEasyReader response = easy
+                    .path(CREATE_USERS)
+                    .data(payload, MediaType.JSON_UTF_8)
+                    .withLogWriter(testLoggerLogWriter)
+                    .logRequestDetails()
+                    .post();
+
+            return response;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 

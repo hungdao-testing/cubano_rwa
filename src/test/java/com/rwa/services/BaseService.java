@@ -14,7 +14,7 @@ import org.concordion.slf4j.ext.ReportLogger;
 import org.concordion.slf4j.ext.ReportLoggerFactory;
 
 @FullOGNL
-public class BaseService extends CubanoTemplateFixture {
+public class BaseService {
     protected ReportLogger log = ReportLoggerFactory.getReportLogger(BankAccountService.class);
     protected HttpEasy easy = HttpEasy.request().baseUrl(AppConfig.getInstance().getApiUrl());
     protected TestLoggerLogWriter testLoggerLogWriter = new TestLoggerLogWriter();
