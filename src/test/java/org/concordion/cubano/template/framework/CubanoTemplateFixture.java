@@ -2,10 +2,7 @@ package org.concordion.cubano.template.framework;
 
 import java.io.Closeable;
 
-import org.concordion.api.AfterExample;
-import org.concordion.api.BeforeExample;
-import org.concordion.api.ConcordionResources;
-import org.concordion.api.FailFast;
+import org.concordion.api.*;
 import org.concordion.api.extension.Extension;
 import org.concordion.api.extension.Extensions;
 import org.concordion.cubano.config.Config;
@@ -39,6 +36,7 @@ import org.openqa.selenium.JavascriptExecutor;
 @ConcordionResources("/customConcordion.css")
 @Extensions({ TimestampFormatterExtension.class, RunTotalsExtension.class, StatusInfoExtension.class })
 @FailFast
+@FullOGNL
 public abstract class CubanoTemplateFixture extends ConcordionBrowserFixture {
     protected JavascriptExecutor js = (JavascriptExecutor) this.getBrowser().getDriver();
 

@@ -6,6 +6,7 @@ import org.concordion.cubano.template.AppConfig;
 import org.concordion.cubano.template.driver.ui.PageObject;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 @FullOGNL
 public class BasePageObject extends PageObject<BasePageObject> {
@@ -26,5 +27,9 @@ public class BasePageObject extends PageObject<BasePageObject> {
     protected void inputField(WebElement webElement, String value){
         this.waitForElementToClickable(webElement, AppConfig.getInstance().getDefaultTimeout());
         webElement.sendKeys(setOutputIfInputValueIsEmpty(value));
+    }
+
+    protected void waitUntilElementVisible(WebElement element){
+        this.waitUntil(ExpectedConditions.visibilityOf(element), AppConfig.getInstance().getDefaultTimeout());
     }
 }

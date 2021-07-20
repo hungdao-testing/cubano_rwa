@@ -14,21 +14,18 @@ I could link a bank profile to my user account.
     
     
 ### [Scenario:](- "could on-board for new users") Newly created user could on-board successfully
-<div>
-<p concordion:execute="createUserAccountByApi(#name, #username, #password)">
 
-Given [Nicolas Cage](- "#name=#TEXT"), a newly created user
+[](- "#user=setUpOnBoardingData()")
 
-|Username|Password|
-|---|---|
-|<p/>|s3cret|
+Given there was a registered user
 
-</p>
-</div>
+|First Name| Last Name | Username | Password|
+|---|---|---|---|
+|<span concordion:echo="#user.firstName"></span>|<span concordion:echo="#user.lastName"></span>|<span concordion:echo="#user.username"></span>|<span concordion:set="#password">s3cret</span>|
 
 
 <div>
-<p concordion:execute="processOnBoardingFlow(#bankName,#routingNumber,#accountNumber)">
+<p concordion:execute="#result=processOnBoardingFlow(#user.username,#password,#bankName,#routingNumber,#accountNumber)">
 
 And he was on the On-boarding process
 
@@ -42,4 +39,4 @@ When he provides valid information for on-boarding form
 </div>
 
 
-Then he could finish the process [successfully](- "c:assert-true=verifyBankAccountIsAdded()")
+Then he could finish the process [successfully](- "c:assert-true=#result")

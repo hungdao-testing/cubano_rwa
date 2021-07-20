@@ -42,6 +42,7 @@ public class SignUpPage extends BasePageObject {
     }
 
     public SignUpPage isAt(){
+        this.waitUntilPageIsLoaded(AppConfig.getInstance().getDefaultTimeout());
         ChainExpectedConditions
                 .with(ExpectedConditions.visibilityOf(firstNameField))
                 .and(ExpectedConditions.visibilityOf(lastNameField))

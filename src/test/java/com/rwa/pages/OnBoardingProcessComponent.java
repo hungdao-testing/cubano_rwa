@@ -2,6 +2,7 @@ package com.rwa.pages;
 
 import com.rwa.specs.BasePageObject;
 import org.concordion.cubano.driver.BrowserBasedTest;
+import org.concordion.cubano.driver.web.ChainExpectedConditions;
 import org.concordion.cubano.template.AppConfig;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,7 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
-public class OnBoardingProcess extends BasePageObject {
+public class OnBoardingProcessComponent extends BasePageObject {
 
     @FindBy(css = "[data-test='user-onboarding-dialog']")
     private WebElement onBoardingDialog;
@@ -35,13 +36,13 @@ public class OnBoardingProcess extends BasePageObject {
     @FindBy(css = "p.Mui-error")
     private List<WebElement> errorMessages;
 
-    public OnBoardingProcess(BrowserBasedTest test) {
+    public OnBoardingProcessComponent(BrowserBasedTest test) {
         super(test);
     }
 
-    public boolean isAt(){
-        ExpectedConditions.textToBePresentInElement(onBoardingTitle, "Get Started with Real World App");
-        return true;
+    public OnBoardingProcessComponent waitForOnBoardingDialogLoaded(){
+        waitUntilElementVisible(onBoardingDialog);
+        return this;
     }
 
     public boolean isOneOfInputFieldsError(){
@@ -57,7 +58,15 @@ public class OnBoardingProcess extends BasePageObject {
         routingNumberField.sendKeys(routingNumber);
         accountNumber.sendKeys(accountNum);
 
+        if(isOneOfInputFieldsError()) return;
+
         this.waitForElementToClickable(saveBtn, AppConfig.getInstance().getDefaultTimeout());
         saveBtn.click();
+
+        this.waitUntil(ExpectedConditions.textToBePresentInElement(
+                onBoardingTitle, "Finished"), AppConfig.getInstance().getDefaultTimeout());
+        this.waitForElementToClickable(nextButton, AppConfig.getInstance().getDefaultTimeout());
+        nextButton.click();
+        ExpectedConditions.invisibilityOf(onBoardingDialog);
     }
 }
