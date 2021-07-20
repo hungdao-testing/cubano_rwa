@@ -1,6 +1,7 @@
 package com.rwa.pages;
 
 import com.rwa.specs.BasePageObject;
+import org.concordion.api.MultiValueResult;
 import org.concordion.cubano.driver.BrowserBasedTest;
 import org.concordion.cubano.driver.web.ChainExpectedConditions;
 import org.concordion.cubano.template.AppConfig;
@@ -9,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OnBoardingProcessComponent extends BasePageObject {
 
@@ -45,20 +47,36 @@ public class OnBoardingProcessComponent extends BasePageObject {
         return this;
     }
 
-    public boolean isOneOfInputFieldsError(){
+    private boolean isOneOfInputFieldsError(){
         return errorMessages.stream().anyMatch(WebElement::isDisplayed);
     }
 
-    public void processOnBoardingForNewUser(String bankName, String routingNumber, String accountNum){
-        this.waitForElementToClickable(nextButton, AppConfig.getInstance().getDefaultTimeout());
-        nextButton.click();
+    private List<String> getErrorMessage(){
+        return errorMessages
+                .stream()
+                .map(s -> s.getText())
+                .collect(Collectors.toList());
+    }
 
+    private OnBoardingProcessComponent fillBankingInfo(String bankName, String routingNumber, String accountNum){
         this.waitForElementToClickable(bankNameField, AppConfig.getInstance().getDefaultTimeout());
         bankNameField.sendKeys(bankName);
         routingNumberField.sendKeys(routingNumber);
         accountNumber.sendKeys(accountNum);
 
-        if(isOneOfInputFieldsError()) return;
+        onBoardingTitle.click();
+        return this;
+    }
+
+    public MultiValueResult processOnBoardingForNewUser(String bankName, String routingNumber, String accountNum){
+        this.waitForElementToClickable(nextButton, AppConfig.getInstance().getDefaultTimeout());
+        nextButton.click();
+
+        this.fillBankingInfo(bankName, routingNumber, accountNum);
+        if(isOneOfInputFieldsError()) {
+            this.capturePage("Error: " + getErrorMessage());
+            return new MultiValueResult().with("result", false).with("errorMsg", getErrorMessage());
+        };
 
         this.waitForElementToClickable(saveBtn, AppConfig.getInstance().getDefaultTimeout());
         saveBtn.click();
@@ -68,5 +86,7 @@ public class OnBoardingProcessComponent extends BasePageObject {
         this.waitForElementToClickable(nextButton, AppConfig.getInstance().getDefaultTimeout());
         nextButton.click();
         ExpectedConditions.invisibilityOf(onBoardingDialog);
+
+        return new MultiValueResult().with("result", true).with("errorMsg", "");
     }
 }

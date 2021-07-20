@@ -14,6 +14,7 @@ import java.io.IOException;
 
 @FullOGNL
 public class SignUpFixture extends CubanoTemplateFixture {
+
     private SignUpPage signUpPage;
     private BankAccountService bankAccountService;
 
@@ -22,9 +23,6 @@ public class SignUpFixture extends CubanoTemplateFixture {
         this.signUpPage = new SignUpPage(this);
         this.bankAccountService = new BankAccountService();
     }
-
-
-
 
     public MultiValueResult registerAccount(String firstName, String lastName, String username, String password, String confirmPassword) throws IOException {
         MultiValueResult multiValueResult = new MultiValueResult();

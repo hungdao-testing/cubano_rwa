@@ -80,6 +80,7 @@ public abstract class CubanoTemplateFixture extends ConcordionBrowserFixture {
 
     @AfterExample
     public void tearDownExample() {
+        logger.info(" === Clear Local Storage ===");
         JavascriptExecutor js = (JavascriptExecutor) this.getBrowser().getDriver();
         js.executeScript("window.localStorage.clear()");
     }
