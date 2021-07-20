@@ -74,7 +74,7 @@ public class OnBoardingProcessComponent extends BasePageObject {
 
         this.fillBankingInfo(bankName, routingNumber, accountNum);
         if(isOneOfInputFieldsError()) {
-            this.capturePage("Error: " + getErrorMessage());
+            this.capturePage(getErrorMessage().toString());
             return new MultiValueResult().with("result", false).with("errorMsg", getErrorMessage());
         };
 

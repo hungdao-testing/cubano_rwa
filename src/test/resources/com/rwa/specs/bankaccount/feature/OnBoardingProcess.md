@@ -46,7 +46,7 @@ User must provide your banking profile to pass the On-boarding process:
 - [ ] Routing Number is required and at lease 9 digits
 - [ ] Account Number is required and at lease 9 digits
 
-#### [Scenario:](- "required fields") Required field
+#### [Scenario:](- "data format validation") Data Format Validation
 
 Given there was a newly registered user
 
@@ -70,9 +70,14 @@ Then he should see the error message
 |Missing Bank Name|<p/>|031302997|000123456789|Enter a bank name|
 |Missing Routing Number|Bank Of America|<p/>|000123456789|Enter a valid bank routing number|
 |Missing Account Number|Bank Of America|031302997|<p/>|Enter a valid bank account number|
+|Bank Name length|Bank|031302997|000123456789|Must contain at least 5 characters|
+|Routing Number length|Bank Of America|031|000123456789|Must contain a valid routing number|
+|Account Number length|Bank Of America|031302997|00|Must contain at least 9 digits|
+
 
 [Bank Name]: - "#bankName"
 [Routing Number]: - "#routingNumber"
 [Account Number]: - "#accountNumber"
 [process]: - "#process=processOnBoardingFlow(#bankName,#routingNumber,#accountNumber)"
 [match]: - "?=#process.errorMsg[0]"
+
