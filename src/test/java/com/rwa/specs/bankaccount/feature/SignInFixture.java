@@ -27,22 +27,37 @@ public class SignInFixture extends CubanoTemplateFixture {
         return DataManagement.getUsers().stream().filter(user -> user.getBalance() > 0).findFirst().get();
     }
 
-    public void logInWorkFlow(String username, String password){
+    public String loginToSystemSuccessfully(String username, String password, String condition){
         this.signInPage
                 .goTo(this)
                 .isAt()
                 .inputUsername(username)
                 .inputPassword(password);
-
-        if (this.signInPage.isOneOfInputFieldViolateDataRule()) return;
         this.signInPage.submit();
+        this.homePage.assertHomePageIsLoaded();
+        return condition;
+    }
+    public String loginToSystemWithIncorrectDataFormat(String username, String password, String condition){
+        this.signInPage
+                .goTo(this)
+                .isAt()
+                .inputUsername(username)
+                .inputPassword(password);
+        if (this.signInPage.isOneOfInputFieldViolateDataRule()) return getErrorMessage();
+        else return condition;
     }
 
-    public boolean verifyLogInSuccessfully(){
-        return this.homePage.isAt();
+    public String loginToSystemWithIncorrectCredentials(String username, String password){
+        this.signInPage
+                .goTo(this)
+                .isAt()
+                .inputUsername(username)
+                .inputPassword(password);
+        this.signInPage.submit();
+        return getErrorMessage();
     }
-
-    public String getErrorMessage(){
+    
+    private String getErrorMessage(){
         if(this.signInPage.isOneOfInputFieldViolateDataRule()){
             return this.signInPage.getInlineErrorMessageEls().get(0).getText();
         }

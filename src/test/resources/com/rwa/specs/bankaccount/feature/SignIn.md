@@ -2,35 +2,49 @@
 
 As a registered user, I want to authenticate to the system by so that I could do banking activities
 
-## Rules:
+
+## [Rules](- "before")
 - To authenticate to the system, clients must provide their registered usernames and passwords.
 - In case there are problems with sign-in, the system returns corresponding error message
   and preventing users accessing to the system.
-
-## Scenario: User could log-in with valid credentials
-
-### [Example:](- "login with valid credentials"):
+  
 [](- "#data=getSignInData()")
- Given [](- "c:echo=#data.firstName") [](- "c:echo=#data.lastName") registered an account with username '[](- "c:echo=#data.username")' and password '[s3cret](- "#password=#TEXT")'
 
- When he [logs in](- "logInWorkFlow(#data.username, #password)") with valid credentials
+### [Scenario: User could log-in with valid credentials](- "login with valid credentials"):
 
- Then he should authenticate to the app [successfully](- "c:assert-true=verifyLogInSuccessfully()")
+When a registered user logs into the app with valid credentials
+
+   - Username: '[](- "c:echo=#data.username")'
+   - password '[s3cret](- "#password=#TEXT")'
+
+Then he should authenticate to the app [successfully](- "?=loginToSystemSuccessfully(#data.username, #password, #TEXT)")
 
 
-## Scenario: User could not log-in with incorrect data
+### [Scenario: User could not log-in with incorrect data format](- "Could not login with incorrect format")
 
-### [Example:](- "Could not login")
+When user [](- "c:echo=#data.getFirstName()") [](- "c:echo=#data.getLastName()") accidentally input incorrect data format, he could not log into the application
 
-|[signIn][][Case](- "c:example")|[Username][]|[Password][]|[Error Message][match]|
+|[signIn][][Case](- "c:example")|[Username][]|[Password][]|[Error Message][]|
 |---|---|---|---|
 |Missing input Username|<p/>|s3cret|Username is required|
-|Incorrect credential: password|may.flower|secret|Username or password is invalid|
-|Incorrect credential: username|may.flowe|s3cret|Username or password is invalid|
 |Password length|may.flower|sec|Password must contain at least 4 characters|
 
 [Username]: - "#username"
 [Password]: - "#password"
-[signIn]: - "logInWorkFlow(#username, #password)"
-[match]: - "?=getErrorMessage()"
+[Error Message]: - "#condition=#TEXT"
+[signIn]: - "loginToSystemWithIncorrectDataFormat(#username, #password,#condition)"
 
+
+### [Scenario: User could not log-in with missing input for required fields](- "Could not login with missing input")
+
+
+When user [](- "c:echo=#data.getFirstName()") [](- "c:echo=#data.getLastName()") accidentally missing input required fields, he could not log into the application
+
+|[signIn](- "#res=loginToSystemWithIncorrectCredentials(#username, #password)")[Case](- "c:example")|[Username][]|[Password][]|[Error Message][match]|
+|---|---|---|---|
+|Incorrect password|may.flower|secret|Username or password is invalid|
+|Incorrect username|may.flowe|s3cret|Username or password is invalid|
+
+[Username]: - "#username"
+[Password]: - "#password"
+[match]: - "?=#res"

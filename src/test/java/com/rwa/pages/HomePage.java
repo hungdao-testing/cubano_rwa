@@ -6,6 +6,7 @@ import com.rwa.component.SideBarPage;
 import com.rwa.specs.BasePageObject;
 import org.concordion.cubano.driver.BrowserBasedTest;
 import org.concordion.cubano.template.AppConfig;
+import org.junit.Assert;
 
 
 public class HomePage extends BasePageObject {
@@ -21,9 +22,10 @@ public class HomePage extends BasePageObject {
         this.onBoardingProcessComponent = new OnBoardingProcessComponent(test);
     }
 
-    public boolean isAt(){
+    public void assertHomePageIsLoaded(){
         this.waitUntilPageIsLoaded(AppConfig.getInstance().getDefaultTimeout());
-        return this.sideBarPage.isAt() && this.headerBarPage.isAt();
+        Assert.assertTrue("The home page is not loaded", this.sideBarPage.isAt() && this.headerBarPage.isAt());
+
     }
 
     public SideBarPage getSideBarPage() {
