@@ -2,6 +2,7 @@ package com.rwa.pages;
 
 import com.rwa.specs.BasePageObject;
 import org.concordion.cubano.driver.BrowserBasedTest;
+import org.concordion.cubano.driver.action.ActionWait;
 import org.concordion.cubano.driver.web.ChainExpectedConditions;
 import org.concordion.cubano.template.AppConfig;
 import org.openqa.selenium.WebElement;
@@ -9,6 +10,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class SignInPage extends BasePageObject {
@@ -29,7 +33,7 @@ public class SignInPage extends BasePageObject {
     private List<WebElement> inlineErrorMessageEls;
 
     @FindBy(css = "[data-test='signin-error']")
-    private WebElement alertErrorMessage;
+    private List<WebElement> alertErrorMessages;
 
     public SignInPage(BrowserBasedTest test) {
         super(test);
@@ -62,21 +66,10 @@ public class SignInPage extends BasePageObject {
         this.waitUntilPageIsLoaded(AppConfig.getInstance().getDefaultTimeout());
     }
 
-
-    public boolean isOneOfInputFieldViolateDataRule(){
-        return this.inlineErrorMessageEls.stream().anyMatch(l -> l.isDisplayed());
-    }
-
-    public boolean isAlertErrorDisplayed(){
-        this.waitUntil(ExpectedConditions.visibilityOf(alertErrorMessage), AppConfig.getInstance().getDefaultTimeout());
-        return true;
-    }
-
-    public List<WebElement> getInlineErrorMessageEls() {
-        return inlineErrorMessageEls;
-    }
-
-    public WebElement getAlertErrorMessage() {
-        return alertErrorMessage;
+    public List<String> isErrorDisplayed(){
+        return Stream.of(inlineErrorMessageEls, alertErrorMessages)
+                .parallel().filter(e -> e.size() > 0)
+                .map(e -> e.get(0).getText())
+                .collect(Collectors.toList());
     }
 }

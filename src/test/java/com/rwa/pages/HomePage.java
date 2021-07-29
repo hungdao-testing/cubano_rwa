@@ -22,7 +22,7 @@ public class HomePage extends BasePageObject {
         this.onBoardingProcessComponent = new OnBoardingProcessComponent(test);
     }
 
-    public void assertHomePageIsLoaded(){
+    public void isAt(){
         this.waitUntilPageIsLoaded(AppConfig.getInstance().getDefaultTimeout());
         Assert.assertTrue("The home page is not loaded", this.sideBarPage.isAt() && this.headerBarPage.isAt());
 
