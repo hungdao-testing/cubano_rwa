@@ -60,8 +60,13 @@ public class OnBoardingProcessComponent extends BasePageObject {
 
     private OnBoardingProcessComponent fillBankingInfo(String bankName, String routingNumber, String accountNum){
         this.waitForElementToClickable(bankNameField, AppConfig.getInstance().getDefaultTimeout());
+        bankNameField.clear();
         bankNameField.sendKeys(bankName);
+
+        routingNumberField.clear();
         routingNumberField.sendKeys(routingNumber);
+
+        accountNumber.clear();
         accountNumber.sendKeys(accountNum);
 
         onBoardingTitle.click();
@@ -73,6 +78,7 @@ public class OnBoardingProcessComponent extends BasePageObject {
         nextButton.click();
 
         this.fillBankingInfo(bankName, routingNumber, accountNum);
+
         if(isOneOfInputFieldsError()) {
             this.capturePage(getErrorMessage().toString());
             return new MultiValueResult().with("result", false).with("errorMsg", getErrorMessage());
@@ -83,10 +89,11 @@ public class OnBoardingProcessComponent extends BasePageObject {
 
         this.waitUntil(ExpectedConditions.textToBePresentInElement(
                 onBoardingTitle, "Finished"), AppConfig.getInstance().getDefaultTimeout());
+
         this.waitForElementToClickable(nextButton, AppConfig.getInstance().getDefaultTimeout());
         nextButton.click();
-        ExpectedConditions.invisibilityOf(onBoardingDialog);
 
+        ExpectedConditions.invisibilityOf(onBoardingDialog);
         return new MultiValueResult().with("result", true).with("errorMsg", "");
     }
 }
