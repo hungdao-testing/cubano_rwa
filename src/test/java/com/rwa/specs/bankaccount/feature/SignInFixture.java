@@ -1,5 +1,6 @@
 package com.rwa.specs.bankaccount.feature;
 
+import com.google.common.util.concurrent.Uninterruptibles;
 import com.rwa.data.fixture.User;
 import com.rwa.data.management.DataManagement;
 import com.rwa.pages.HomePage;
@@ -8,6 +9,8 @@ import com.rwa.services.BankAccountService;
 import org.concordion.api.*;
 import org.concordion.cubano.template.framework.CubanoTemplateFixture;
 import org.openqa.selenium.JavascriptExecutor;
+
+import java.util.concurrent.TimeUnit;
 
 
 @FullOGNL
@@ -43,9 +46,13 @@ public class SignInFixture extends CubanoTemplateFixture {
                 .isAt()
                 .inputUsername(username)
                 .inputPassword(password);
-        if (this.signInPage.isErrorDisplayed().size() > 0) return this.signInPage.isErrorDisplayed().get(0);
+        if (this.signInPage.isInlineErrorDisplayed()) {
+            return this.signInPage.getInlineErrorMessageEls();
+        };
         this.signInPage.submit();
-        if (this.signInPage.isErrorDisplayed().size() > 0) return this.signInPage.isErrorDisplayed().get(0);
+        if (this.signInPage.isAlertMessageDisplayed()) {
+            return this.signInPage.getAlertErrorMessages();
+        }
         return condition;
     }
 }

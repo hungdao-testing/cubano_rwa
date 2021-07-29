@@ -1,5 +1,6 @@
 package com.rwa.pages;
 
+import com.google.common.util.concurrent.Uninterruptibles;
 import com.rwa.specs.BasePageObject;
 import org.concordion.cubano.driver.BrowserBasedTest;
 import org.concordion.cubano.driver.action.ActionWait;
@@ -66,10 +67,21 @@ public class SignInPage extends BasePageObject {
         this.waitUntilPageIsLoaded(AppConfig.getInstance().getDefaultTimeout());
     }
 
-    public List<String> isErrorDisplayed(){
-        return Stream.of(inlineErrorMessageEls, alertErrorMessages)
-                .parallel().filter(e -> e.size() > 0)
-                .map(e -> e.get(0).getText())
-                .collect(Collectors.toList());
+    public boolean isInlineErrorDisplayed(){
+        ExpectedConditions.invisibilityOf(submitBtn);
+        return inlineErrorMessageEls.size() > 0;
+    }
+
+    public boolean isAlertMessageDisplayed(){
+        this.waitUntilElementVisible(usernameField);
+        return alertErrorMessages.size() > 0;
+    }
+
+    public String getInlineErrorMessageEls() {
+        return inlineErrorMessageEls.get(0).getText();
+    }
+
+    public String getAlertErrorMessages() {
+        return alertErrorMessages.get(0).getText();
     }
 }

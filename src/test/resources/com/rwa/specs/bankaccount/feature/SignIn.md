@@ -22,7 +22,6 @@ Then he should authenticate to the app [successfully](- "?=assertLoginProcessWit
 
 ### [Scenario: User could not log-in application with invalid credentials](- "could not login with invalid credentials"):
 [](- "#data=getSignInData()")
-
 When a registered user [](- "c:echo=#data.getFirstName()") [](- "c:echo=#data.getLastName()") logs into the app with invalid credentials accidentally, then he should not be allowed to access the application because of error [Username or password is invalid](- "?=assertLoginUnsuccessfullyWithInvalidData(#data.username, #data.getUuid(), #TEXT)")
 
 
